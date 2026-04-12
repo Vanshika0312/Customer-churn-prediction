@@ -12,8 +12,9 @@ import base64
 import io
 
 app = Flask(__name__)
-model = pickle.load(open('model.pkl', 'rb'))
-survmodel = pickle.load(open('survivemodel.pkl', 'rb'))
+import joblib
+model = joblib.load('model.pkl')
+survmodel = joblib.load('survivemodel.pkl')
 
 @app.route('/')
 def home():
