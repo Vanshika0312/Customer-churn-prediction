@@ -1,7 +1,7 @@
 flask==2.3.2          # web app
 scikit-learn==1.2.2   # Random Forest model
 pandas==1.5.3         # data handling
-numpy==1.24.3         # arrays
+numpy==1.24.3        # arrays
 shap==0.42.1          # SHAP plots
 joblib==1.2.0         # model save/load
 matplotlib==3.7.1     # plots
