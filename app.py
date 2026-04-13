@@ -115,7 +115,7 @@ def predict():
     output = prediction[0,1]
 
     # Shap Values
-    explainer = joblib.load(filename="explainer.bz2")
+    explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(np.array(final_features))
     shap_img = io.BytesIO()
     shap.force_plot(explainer.expected_value[1], shap_values[1], columns, matplotlib = True, show = False).savefig(shap_img, bbox_inches="tight", format = 'png')
@@ -253,5 +253,17 @@ def predict():
     return render_template('index.html', prediction_text='Churn probability is {} and Expected Life Time Value is ${}'.format(round(output, 2), CLTV), url_1 = gauge_url, url_2 = shap_url, url_3 = hazard_url, url_4 = surv_url)
 
 
+# if __name__ == "__main__":
+#     app.run(debug=True)
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
+
+
+    app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+@app.after_request
+def add_header(response):
+    response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+    return response

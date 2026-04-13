@@ -4,9 +4,137 @@
 <head>
     <meta charset="UTF-8">
     <title>Customer Churn Prediction</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        .login {
+            width: 95%;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 25px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+        }
+
+        h1 {
+            font-size: 40px;
+            background: linear-gradient(45deg, #00f5c4, #00c6ff);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        h4 {
+            color: #bbb;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            transition: 0.3s;
+        }
+
+        .section:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 255, 200, 0.4);
+        }
+
+        input[type="checkbox"] {
+            transform: scale(1.3);
+            accent-color: #00f5c4;
+            margin-right: 6px;
+        }
+
+        label {
+            margin-right: 15px;
+            font-size: 14px;
+        }
+
+        select,
+        input[type="number"] {
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            margin: 8px;
+            background: #1e2a38;
+            color: white;
+            transition: 0.3s;
+        }
+
+        select:hover,
+        input[type="number"]:hover {
+            background: #2f3f52;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            box-shadow: 0 0 10px #00f5c4;
+        }
+
+        button {
+            background: linear-gradient(45deg, #00f5c4, #00c6ff);
+            border: none;
+            border-radius: 30px;
+            color: black;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 20px #00f5c4;
+        }
+
+        img {
+            margin: 10px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.6);
+            transition: 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login,
+        .section,
+        button {
+            animation: fadeIn 0.8s ease-in-out;
+        }
+    </style>
 </head>
 
-<body style="background: black" text="white">
+<body>
 
     <div class="login">
         <center>
@@ -16,105 +144,104 @@
             <h4>Author: Arch Desai</h4>
         </center>
 
-        <!-- Main Input For Receiving Query to our ML -->
         <form action="{{ url_for('predict')}}" method="post">
 
-            <center>
-                <input type="checkbox" id="SeniorCitizen" name="SeniorCitizen" value=1>
-                <label for="SeniorCitizen"> Senior Citizen</label> &nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="Partner" name="Partner" value=1>
-                <label for="Partner">Has a partner</label> &nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="Dependents" name="Dependents" value=1>
-                <label for="Dependents">Has dependents</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="PaperlessBilling" name="PaperlessBilling" value=1>
-                <label for="PaperlessBilling">Paperless Billing</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="PhoneService" name="PhoneService" value=1>
-                <label for="PhoneService">Phone Service</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="MultipleLines" name="MultipleLines" value=1>
-                <label for="MultipleLines">Multiple Lines</label>
-            </center>
+            <div class="section">
+                <center>
+                    <input type="checkbox" id="SeniorCitizen" name="SeniorCitizen" value=1>
+                    <label for="SeniorCitizen">Senior Citizen</label>
+                    <input type="checkbox" id="Partner" name="Partner" value=1>
+                    <label for="Partner">Has a partner</label>
+                    <input type="checkbox" id="Dependents" name="Dependents" value=1>
+                    <label for="Dependents">Has dependents</label>
+                    <input type="checkbox" id="PaperlessBilling" name="PaperlessBilling" value=1>
+                    <label for="PaperlessBilling">Paperless Billing</label>
+                    <input type="checkbox" id="PhoneService" name="PhoneService" value=1>
+                    <label for="PhoneService">Phone Service</label>
+                    <input type="checkbox" id="MultipleLines" name="MultipleLines" value=1>
+                    <label for="MultipleLines">Multiple Lines</label>
+                </center>
+            </div>
+
+            <div class="section">
+                <center>
+                    <input type="checkbox" id="OnlineSecurity" name="OnlineSecurity" value=1>
+                    <label for="OnlineSecurity">Online Security</label>
+                    <input type="checkbox" id="OnlineBackup" name="OnlineBackup" value=1>
+                    <label for="OnlineBackup">Online Backup</label>
+                    <input type="checkbox" id="DeviceProtection" name="DeviceProtection" value=1>
+                    <label for="DeviceProtection">Device Protection</label>
+                    <input type="checkbox" id="TechSupport" name="TechSupport" value=1>
+                    <label for="TechSupport">Tech Support</label>
+                    <input type="checkbox" id="StreamingTV" name="StreamingTV" value=1>
+                    <label for="StreamingTV">Streaming TV</label>
+                    <input type="checkbox" id="StreamingMovies" name="StreamingMovies" value=1>
+                    <label for="StreamingMovies">Streaming Movies</label>
+                </center>
+            </div>
+
+            <div class="section">
+                <center>
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender">
+                        <option value=0>Male</option>
+                        <option value=1>Female</option>
+                    </select>
+
+                    <label for="InternetService">Internet :</label>
+                    <select id="InternetService" name="InternetService">
+                        <option value=0>No</option>
+                        <option value=1>DSL</option>
+                        <option value=2>Fiber optic</option>
+                    </select>
+
+                    <label for="Contract">Contract:</label>
+                    <select id="Contract" name="Contract">
+                        <option value=0>Month-to-Month</option>
+                        <option value=1>One-Year</option>
+                        <option value=2>Two-Year</option>
+                    </select>
+
+                    <label for="PaymentMethod">Payment:</label>
+                    <select id="PaymentMethod" name="PaymentMethod">
+                        <option value=0>Automatic: Bank Transfer</option>
+                        <option value=1>Automatic: Credit Card</option>
+                        <option value=2>Electronic Check</option>
+                        <option value=3>Mailed Check</option>
+                    </select>
+                </center>
+            </div>
+
+            <div class="section">
+                <center>
+                    <input type="number" min="0" name="MonthlyCharges" placeholder="Monthly Charges"
+                        required="required" />
+                    <input type="number" min="0" name="Tenure" placeholder="Tenure in Months" required="required" />
+                </center>
+            </div>
+
             <br>
 
             <center>
-                <input type="checkbox" id="OnlineSecurity" name="OnlineSecurity" value=1>
-                <label for="OnlineSecurity">Online Security</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="OnlineBackup" name="OnlineBackup" value=1>
-                <label for="OnlineBackup">Online Backup</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="DeviceProtection" name="DeviceProtection" value=1>
-                <label for="DeviceProtection">Device Protection</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="TechSupport" name="TechSupport" value=1>
-                <label for="TechSupport">Tech Support</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="StreamingTV" name="StreamingTV" value=1>
-                <label for="StreamingTV">Streaming TV</label>&nbsp;&nbsp;&nbsp;
-                <input type="checkbox" id="StreamingMovies" name="StreamingMovies" value=1>
-                <label for="StreamingMovies">Streaming Movies</label>
-            </center>
-            <br>
-
-            <center>
-                <label for="gender">Gender:</label>
-                <select id="gender" name="gender">
-                    <option value=0>Male</option>
-                    <option value=1>Female</option>
-                </select> &nbsp;&nbsp;
-
-                <label for="InternetService">Internet :</label>
-                <select id="InternetService" name="InternetService">
-                    <option value=0>No</option>
-                    <option value=1>DSL</option>
-                    <option value=2>Fiber optic</option>
-                </select> &nbsp;&nbsp;
-
-                <label for="Contract">Contract:</label>
-                <select id="Contract" name="Contract">
-                    <option value=0>Month-to-Month</option>
-                    <option value=1>One-Year</option>
-                    <option value=2>Two-Year</option>
-                </select>&nbsp;&nbsp;
-
-                <label for="PaymentMethod">Payment:</label>
-                <select id="PaymentMethod" name="PaymentMethod">
-                    <option value=0>Automatic: Bank Transfer</option>
-                    <option value=1>Automatic: Credit Card</option>
-                    <option value=2>Electronic Check</option>
-                    <option value=3>Mailed Check</option>
-                </select>
-            </center>
-            <br>
-
-            <center>
-                <input type="number" min="0" name="MonthlyCharges" placeholder="Monthly Charges" required="required" />
-                <input type="number" min="0" name="Tenure" placeholder="Tenure in Months" required="required" />
-
-            </center>
-            <br><br>
-
-            <center>
-                <button type="submit" class="btn btn-primary btn-block btn-large"
-                    style="height:30px;width:200px">Predict</button>
+                <button type="submit" style="height:45px;width:240px">🚀 Predict Churn</button>
             </center>
         </form>
+
         <br>
         <center>
-
             {{ prediction_text }}
 
+            <br><br>
 
-            <br>
-            <br>
-            <img src="data:image/png;base64,{{url_3}}" alt="Submit Form" height="180" width="233"
-                onerror="this.style.display='none'" />
-            <img src="data:image/png;base64,{{url_1}}" alt="Submit Form" height="180" width="233"
-                onerror="this.style.display='none'" />
-            <img src="data:image/png;base64,{{url_4}}" alt="Submit Form" height="180" width="233"
-                onerror="this.style.display='none'" />
-            <br>
-            <br>
-            <img src="data:image/png;base64,{{url_2}}" alt="Submit Form" height="150" width="711"
-                onerror="this.style.display='none'" />
+            <img src="data:image/png;base64,{{url_3}}" height="180" width="233" onerror="this.style.display='none'" />
+            <img src="data:image/png;base64,{{url_1}}" height="180" width="233" onerror="this.style.display='none'" />
+            <img src="data:image/png;base64,{{url_4}}" height="180" width="233" onerror="this.style.display='none'" />
+
+            <br><br>
+
+            <img src="data:image/png;base64,{{url_2}}" height="150" width="711" onerror="this.style.display='none'" />
         </center>
     </div>
-
 
 </body>
 
